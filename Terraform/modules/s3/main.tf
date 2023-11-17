@@ -3,7 +3,7 @@
 resource "aws_s3_bucket" "state-bucket" {
   # Name bucket must unique
   bucket = "state-bucket-trourest"
-  
+
   lifecycle {
     prevent_destroy = false
   }
@@ -32,8 +32,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption-s3" {
 }
 
 resource "aws_s3_bucket_acl" "s3_bucket_acl" {
-  bucket = aws_s3_bucket.state-bucket.id
-  acl    = "private"
+  bucket     = aws_s3_bucket.state-bucket.id
+  acl        = "private"
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
 }
 
@@ -49,8 +49,8 @@ resource "aws_s3_bucket_public_access_block" "public-block-s3" {
   bucket = aws_s3_bucket.state-bucket.bucket
 
   # List Acccess control list
-  block_public_acls = false
-  block_public_policy = false
-  ignore_public_acls = false
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
   restrict_public_buckets = false
 }

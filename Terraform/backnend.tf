@@ -6,6 +6,6 @@
 #     region = "us-east-1"
 #     profile = "default"
 #   }
-    # For State Locking
-    ##dynamodb_table = "terraform-dev-state-table" 
+# For State Locking
+##dynamodb_table = "terraform-dev-state-table" 
 # }

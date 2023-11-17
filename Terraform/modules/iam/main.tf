@@ -1,16 +1,16 @@
 # Create IAM user "trourest"
 module "iam_user" {
   version = "5.30.2"
-  source = "terraform-aws-modules/iam/aws//modules/iam-user"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-user"
 
   name          = "trourest"
-  force_destroy = true  # Allow destroying the user without additional confirmation
-  pgp_key = "keybase:tgpham26gmailcom"
+  force_destroy = true # Allow destroying the user without additional confirmation
+  pgp_key       = "keybase:tgpham26gmailcom"
 
-  create_iam_access_key = true
+  create_iam_access_key   = true
   password_reset_required = false
-  password_length = 18
-  
+  password_length         = 18
+
   tags = {
     Name = "Giang"
   }
@@ -18,7 +18,7 @@ module "iam_user" {
 }
 
 module "iam_group_with_policies" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-group-with-policies"
+  source = "terraform-aws-modules/iam/aws//modules/iam-group-with-policies"
 
   name = "Admin-trourest"
 

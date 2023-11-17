@@ -1,14 +1,14 @@
 # Create VPC
 resource "aws_vpc" "vpc" {
 
-  cidr_block       = var.vpc_cidr
-  instance_tenancy = "default"
-  enable_dns_support = true
+  cidr_block           = var.vpc_cidr
+  instance_tenancy     = "default"
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.project}-vpc"
-    Project  = "${var.name}"
+    Name    = "${var.project}-vpc"
+    Project = "${var.name}"
   }
 }
 
@@ -22,8 +22,8 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "${var.project}-igw"
-    Project  = "${var.name}"
+    Name    = "${var.project}-igw"
+    Project = "${var.name}"
   }
 }
 
@@ -32,60 +32,60 @@ resource "aws_internet_gateway" "igw" {
 # Create public subnet 1
 # For Ansible
 resource "aws_subnet" "pub1" {
-	vpc_id     = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc.id
 
-	cidr_block = cidrsubnet(var.vpc_cidr , var.sbit , 0)
-	availability_zone = data.aws_availability_zones.available.names[0]
-	map_public_ip_on_launch = true
+  cidr_block              = cidrsubnet(var.vpc_cidr, var.sbit, 0)
+  availability_zone       = data.aws_availability_zones.available.names[0]
+  map_public_ip_on_launch = true
 
-    tags = {
-        Name = "${var.project}-pub1"
-        Project  = "${var.name}"
-    }
+  tags = {
+    Name    = "${var.project}-pub1"
+    Project = "${var.name}"
+  }
 }
 
 # Create public subnet 2
 # For Nginx
 resource "aws_subnet" "pub2" {
-	vpc_id     = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc.id
 
-	cidr_block = cidrsubnet(var.vpc_cidr , var.sbit , 1)
-	availability_zone = data.aws_availability_zones.available.names[1]
-	map_public_ip_on_launch = true
+  cidr_block              = cidrsubnet(var.vpc_cidr, var.sbit, 1)
+  availability_zone       = data.aws_availability_zones.available.names[1]
+  map_public_ip_on_launch = true
 
-    tags = {
-        Name = "${var.project}-pub2"
-        Project  = "${var.name}"
-    }
+  tags = {
+    Name    = "${var.project}-pub2"
+    Project = "${var.name}"
+  }
 }
 
 # Create public subnet 3
 # For cluster
 resource "aws_subnet" "pub3" {
-	vpc_id     = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc.id
 
-	cidr_block = cidrsubnet(var.vpc_cidr , var.sbit , 2)
-	availability_zone = data.aws_availability_zones.available.names[2]
-	map_public_ip_on_launch = true
+  cidr_block              = cidrsubnet(var.vpc_cidr, var.sbit, 2)
+  availability_zone       = data.aws_availability_zones.available.names[2]
+  map_public_ip_on_launch = true
 
-    tags = {
-        Name = "${var.project}-pub2"
-        Project  = "${var.name}"
-    }
+  tags = {
+    Name    = "${var.project}-pub2"
+    Project = "${var.name}"
+  }
 }
 
 # Create private subnet 1
 resource "aws_subnet" "priv1" {
-	vpc_id     = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc.id
 
-	cidr_block = cidrsubnet(var.vpc_cidr , var.sbit , 3)
-	availability_zone = data.aws_availability_zones.available.names[0]
-	map_public_ip_on_launch = true
+  cidr_block              = cidrsubnet(var.vpc_cidr, var.sbit, 3)
+  availability_zone       = data.aws_availability_zones.available.names[0]
+  map_public_ip_on_launch = true
 
-    tags = {
-        Name = "${var.project}-priv1"
-        Project  = "${var.name}"
-    }
+  tags = {
+    Name    = "${var.project}-priv1"
+    Project = "${var.name}"
+  }
 }
 
 # # Create Elastic IP for Nat Gatway
@@ -111,13 +111,13 @@ resource "aws_subnet" "priv1" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
-  route  {
-      cidr_block = "0.0.0.0/0"
-      gateway_id = aws_internet_gateway.igw.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "${var.project}-public-rtb"
-    Project  = "${var.name}"
+    Name    = "${var.project}-public-rtb"
+    Project = "${var.name}"
   }
 }
 

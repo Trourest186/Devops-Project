@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Turn off ufw on Ubuntu
+sudo ufw disable
+
 sudo hostnamectl set-hostname master
 
 # hosts file

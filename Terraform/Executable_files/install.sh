@@ -29,3 +29,4 @@ terraform --version
 
 # Display AWS CLI version
 aws --version
+

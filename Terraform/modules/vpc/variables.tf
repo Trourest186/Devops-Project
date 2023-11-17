@@ -1,5 +1,5 @@
 variable "region" {
-    type = string
+  type = string
 }
 
 # variable "access_key" {}
@@ -7,8 +7,8 @@ variable "region" {
 # variable "secret_key" {}
 
 variable "project" {
-    default = "Devops"
-    type = string
+  default = "Devops"
+  type    = string
 }
 
 variable "vpc_cidr" {}
@@ -16,5 +16,5 @@ variable "vpc_cidr" {}
 variable "sbit" {}
 
 variable "name" {
-    type = string
+  type = string
 }

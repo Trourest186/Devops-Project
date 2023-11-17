@@ -12,9 +12,13 @@
 # #Create VPC
 
 # Create key-pair for EC2 instances
+resource "random_id" "id" {
+  byte_length = 8
+}
+
 resource "aws_key_pair" "TF_key" {
   # count      = var.create_key_pair ? 1 : 0
-  key_name   = var.key_name
+  key_name   = (var.key_name != "" ? var.key_name : random_id.id.hex)
   public_key = tls_private_key.rsa.public_key_openssh
 
   tags = {
@@ -63,11 +67,11 @@ locals {
 
 
 module "ec2" {
-  source         = "./modules/ec2"
+  source = "./modules/ec2"
 
-  key_name       = aws_key_pair.TF_key.key_name
-  instance_type  = var.instance_type
-  ami_type       = var.ami_type
+  key_name            = aws_key_pair.TF_key.key_name
+  instance_type       = var.instance_type
+  ami_type            = var.ami_type
   private_key_content = local.private_key_content
 
   security_group1 = local.security["security1"]

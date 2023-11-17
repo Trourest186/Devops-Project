@@ -79,20 +79,20 @@ resource "aws_security_group" "dbserver" {
   name        = "${var.name}-dbserver"
   description = "Allows access to port 3306 and 22"
   vpc_id      = aws_vpc.vpc.id
-  
+
   # MYSQL
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.webserver.id]
   }
   ingress {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.bastion.id]
   }
   egress {
