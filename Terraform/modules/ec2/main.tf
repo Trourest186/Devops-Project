@@ -211,6 +211,6 @@ resource "null_resource" "result" {
 
   provisioner "file" {
     source      = "./Output_files/creation-time-private-ip.txt"
-    destination = "$HOME/creation-time-private-ip.txt"
+    destination = "/home/${var.user_ec2[1]}/creation-time-private-ip.txt"
   }
 }
