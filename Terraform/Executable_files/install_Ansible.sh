@@ -18,3 +18,17 @@ sudo touch /etc/exports
 
 # Turn off ufw on Ubuntu
 sudo ufw disable
+
+# Install Ansible
+sudo apt -y install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt install ansible -y
+
+# Check Ansible version
+ansible --version
+
+# Install tree tool to view
+sudo apt install tree
+
+# Install SSHpass tool
+sudo apt install sshpass
