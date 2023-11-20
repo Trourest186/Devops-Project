@@ -1,12 +1,12 @@
 #Create IAM
-# module "iam" {
-#   source = "./modules/iam"
-# }
+module "iam" {
+  source = "./modules/iam"
+}
 
-# # Create S3
-# module "s3" {
-#   source = "./modules/s3"
-# }
+# Create S3
+module "s3" {
+  source = "./modules/s3"
+}
 
 # #Sleep ???? to S3 ok, then can configuration backup state file
 # #Create VPC

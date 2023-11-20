@@ -178,11 +178,6 @@ resource "aws_instance" "ansible" {
     destination = "/home/${var.user_ec2[1]}/install_Ansible.sh"
   }
 
-  provisioner "file" {
-    source      = "./Executable_files/install_Ansible.sh"
-    destination = "/home/${var.user_ec2[1]}/install_Ansible.sh"
-  }
-
   tags = {
     Name    = "Ansible"
     Project = "Devops"
@@ -212,5 +207,10 @@ resource "null_resource" "result" {
   provisioner "file" {
     source      = "./Output_files/creation-time-private-ip.txt"
     destination = "/home/${var.user_ec2[1]}/creation-time-private-ip.txt"
+  }
+
+  provisioner "file" {
+    source      = "./Devops.pem"
+    destination = "/home/${var.user_ec2[1]}/Devops.pem" # Need check does it work well!
   }
 }
