@@ -1,0 +1,13 @@
+---
+- hosts: master
+  gather_facts: false
+  become: true
+  remote_user: ubuntu
+  tasks:
+    - name: Test copy
+      ansible.builtin.copy:
+        src: /home/ubuntu/test.txt
+        dest: /home/ubuntu/test.txt
+        owner: ubuntu
+        group: ubuntu
+        mode: '777'

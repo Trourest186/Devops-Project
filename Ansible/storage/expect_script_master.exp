@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+set timeout 180
+spawn ./master.sh
+
+expect "exists"
+send "y\n"
+
+expect "ENTER"
+send "\r\n"
+
+interact
+
+
