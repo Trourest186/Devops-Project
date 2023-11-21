@@ -53,7 +53,7 @@ resource "null_resource" "sync_master" {
   }
 
   provisioner "local-exec" {
-    command     = "echo ${aws_instance.master.private_ip} >> creation-time-private-ip.txt"
+    command     = "echo ${aws_instance.master.private_ip} >> creation-time-private-ip.yml"
     working_dir = "Output_files/"
     #on_failure = continue
   }
@@ -107,7 +107,7 @@ resource "null_resource" "sync_worker" {
   }
 
   provisioner "local-exec" {
-    command     = "echo ${aws_instance.worker.private_ip} >> creation-time-private-ip.txt"
+    command     = "echo ${aws_instance.worker.private_ip} >> creation-time-private-ip.yml"
     working_dir = "Output_files/"
     #on_failure = continue
   }
@@ -205,8 +205,8 @@ resource "null_resource" "result" {
   }
 
   provisioner "file" {
-    source      = "./Output_files/creation-time-private-ip.txt"
-    destination = "/home/${var.user_ec2[1]}/creation-time-private-ip.txt"
+    source      = "./Output_files/creation-time-private-ip.yml"
+    destination = "/home/${var.user_ec2[1]}/creation-time-private-ip.yml"
   }
 
   provisioner "file" {
