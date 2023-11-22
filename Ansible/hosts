@@ -4,8 +4,8 @@
 [worker1]
 10.0.0.42
 
-[master:vars]
+[worker1:vars]
 ansible_ssh_private_key_file=./storage/ec2-test-key.pem
 
-[worker:vars]
-ansible_ssh_private_key_file=./storage/ec2-test-key.pem
+#[worker:vars]
+#ansible_ssh_private_key_file=./storage/ec2-test-key.pem

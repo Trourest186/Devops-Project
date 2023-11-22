@@ -25,4 +25,5 @@ for ((i=1; i<=n; i++)); do
   echo "$label: $value" >> "$output_file"
 done
 
+
 rm -f create-time-private-ip.yml.bak
