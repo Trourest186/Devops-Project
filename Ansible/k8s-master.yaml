@@ -49,6 +49,10 @@
         group: ubuntu
         mode: '777'
 
+    - name: Permission for master file
+      ansible.builtin.shell:
+        cmd: chmod +x ./master.sh
+
     - name: Execute expect script
       ansible.builtin.shell:
         cmd: expect /home/ubuntu/expect_script_master.exp

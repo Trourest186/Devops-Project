@@ -1,11 +1,11 @@
 [master]
-10.0.0.34
+10.0.0.231
 
 [worker1]
-10.0.0.42
+10.0.0.38
+
+[master:vars]
+ansible_ssh_private_key_file=./storage/ec2-test-key.pem
 
 [worker1:vars]
 ansible_ssh_private_key_file=./storage/ec2-test-key.pem
-
-#[worker:vars]
-#ansible_ssh_private_key_file=./storage/ec2-test-key.pem

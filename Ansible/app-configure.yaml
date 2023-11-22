@@ -1,0 +1,16 @@
+---
+- hosts: master
+  gather_facts: false
+  become: true
+  remote_user: ubuntu
+
+  vars_files:
+    - ./vars/create-time-private-ip.yml
+
+  tasks:
+    - ping:
+
+    - name: Change IP of database in configuration file
+      ansible.builtin.shell:
+        cmd: "sudo sed -i \"s/'172.16.10.132'/'{{master}}'/g\" settings.py"
+        chdir: /home/ubuntu/Devops-Project/Application/Resume-Site-Django/djangoresume
