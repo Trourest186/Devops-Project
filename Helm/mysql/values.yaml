@@ -87,9 +87,9 @@ affinity: {}
   # database: nodejsdb
 mysql:
   - name: "MYSQL_ROOT_PASSWORD"
-    value: "test1234"
+    value: "a123456"
   - name: "MYSQL_DATABASE"
-    value: "nodejsdb"
+    value: "test"
 
 # values.yaml
 pv:

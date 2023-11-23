@@ -9,6 +9,9 @@ send "y\n"
 expect "ENTER"
 send "\r\n"
 
+expect "Do you want to continue"
+send "y\n"
+
 interact
 
 

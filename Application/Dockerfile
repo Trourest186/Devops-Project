@@ -13,11 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt --ignore-installed
 COPY . code
 WORKDIR /code
 
-RUN python3 Resume-Site-Django/manage.py migrate resumesite zero
+#RUN python3 Resume-Site-Django/manage.py migrate resumesite zero
 
-RUN python3 Resume-Site-Django/manage.py makemigrations resumesite
-RUN python3 Resume-Site-Django/manage.py migrate resumesite
-RUN python3 Resume-Site-Django/manage.py migrate
+#RUN python3 Resume-Site-Django/manage.py makemigrations resumesite
+#RUN python3 Resume-Site-Django/manage.py migrate resumesite
+#RUN python3 Resume-Site-Django/manage.py migrate
 
 EXPOSE 8000
 

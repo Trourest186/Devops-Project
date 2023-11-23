@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 import django_heroku
@@ -18,7 +17,8 @@ SECRET_KEY = 'django-insecure-4v)u71w-5v#=%h%bkt&%#5la=z(692-z@=7-nuw6pzvm^*#-@_
 # SECURITY WARNING: don't run with debug turned on in sproduction!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.16.10.132', '127.0.0.1']
+custom_host = os.environ.get('MYSQL_HOST', '127.0.0.1')
+ALLOWED_HOSTS = [custom_host, '127.0.0.1']
 
 
 # Application definition
@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'djangoresume.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': 'a123456',
-        'HOST': '172.16.10.132', # <---- mysql container IPv4Address, phải thêm bằng IP của máy trong dải mạng private
+        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+        'HOST': os.environ.get('MYSQL_HOST'), # <---- mysql container IPv4Address, phải thêm bằng IP của máy trong dải mạng private
         'PORT': '3306',
         'OPTIONS': {'auth_plugin': 'mysql_native_password'},
     }

@@ -5,22 +5,22 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nodejs
+      app: django
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: nodejs
+        app: django
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: nodejs
+        - name: django
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-          - containerPort: 8080
+          - containerPort: 8000
             name: http
             protocol: TCP
           envFrom:

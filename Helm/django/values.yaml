@@ -4,7 +4,7 @@ replicaCount: 2
 image:
   repository: registry.gitlab.com/tgpham26/pnhappproject
   pullPolicy: Always
-  tag: v5.0
+  tag: v18.0
   #repository: docker.io/trourest186/nodejsmysql
   #tag: latest
 
@@ -30,18 +30,18 @@ db:
 database:
   db_host: "mysql.dev.svc.cluster.local"
   db_user: "root"
-  db_pass: "test1234"
+  db_pass: "a123456"
   db_port: "3306"
-  db_database: "nodejsdb"
+  db_database: "test"
 
 service:
-  name: nodejs
+  name: django
   type: NodePort
-  port: 8080
+  port: 8000
   nodePort: 31000
 
 deployment:
-  name: nodejs
+  name: django
 
 # Deploy token
 # values.yaml
@@ -72,8 +72,8 @@ ingress:
   className: nginx
   host: www.trourest186.online
   path: /
-  serviceName: nodejs
-  servicePort: 8080
+  serviceName: django
+  servicePort: 8000
   tls:
     - secretName: secretdns
       hosts:
