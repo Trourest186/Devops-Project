@@ -9,8 +9,14 @@
 
   tasks:
     - ping:
+    
+    - name: Reach IP of pod that is running MYSQL server
+      ansible.builtin.shell:
+       cmd: "kubectl get pods -n dev -o wide | grep '^mysql' | awk '{print $6}'"
+      register: mysql_pod_ip 
 
     - name: Change IP of database in configuration file
-      ansible.builtin.shell:
-        cmd: "sudo sed -i \"s/'172.16.10.132'/'{{master}}'/g\" settings.py"
-        chdir: /home/ubuntu/Devops-Project/Application/Resume-Site-Django/djangoresume
+      ansible.builtin.lineinfile:
+        path: /home/ubuntu/Devops-Project/Helm/django/values.yaml
+        regexp: 'db_host: ".*"'
+        line: '  db_host: "{{ mysql_pod_ip.stdout }}"'
