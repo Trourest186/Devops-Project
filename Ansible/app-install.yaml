@@ -20,7 +20,7 @@
 
     - name: Remove helm installed
       ansible.builtin.shell:
-        cmd: helm uninstall mysql -n dev
+        cmd: helm uninstall mysql -n dev || true
         chdir: "{{ project_path }}"
 
     - name: Package helm for mysql server
@@ -32,6 +32,10 @@
       ansible.builtin.shell:
         cmd: "helm install mysql mysql-0.1.0.tgz -n dev"
         chdir: "{{ project_path }}"
+
+    - name: Pause for 30 seconds
+      ansible.builtin.pause:
+        seconds: 30
 
     - name: Set up IP for true
       ansible.builtin.command: ansible-playbook -i hosts app-configure.yaml -u ubuntu
