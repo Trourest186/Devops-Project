@@ -68,4 +68,3 @@ ingress:
     - secretName: secretdns
       hosts:
         - www.trourest186.online
-
