@@ -29,7 +29,7 @@ db:
     #   value: "nodejsdb"
 database:
   #db_host: "mysql.dev.svc.cluster.local"
-  db_host: "10.244.1.23" # need Ansible
+  db_host: "10.244.1.40"
   db_user: "root"
   db_pass: "a123456"
   db_port: "3306"
