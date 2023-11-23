@@ -15,18 +15,7 @@ db:
   host: 10.0.4.229
   user: root
   pass: "1"
-
-    #nodejs:
-    #  - name: MYSQL_HOST
-    #  value: "mysql.dev.svc.cluster.local"
-    #  - name: MYSQL_PORT
-    # value: "3306"
-    # - name: MYSQL_USER
-    # value: "root"
-    #  - name: MYSQL_PASSWORD
-    # value: "test1234"
-    # - name: MYSQL_DATABASE
-    #   value: "nodejsdb"
+  
 database:
   #db_host: "mysql.dev.svc.cluster.local"
   db_host: "10.244.1.40"
