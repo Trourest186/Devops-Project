@@ -26,4 +26,15 @@ spec:
           envFrom:
             - secretRef:
                 name: db-credentials
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                - "/bin/sh"
+                - "-c"
+                - |
+                  python3 Resume-Site-Django/manage.py migrate resumesite zero
+                  python3 Resume-Site-Django/manage.py makemigrations resumesite
+                  python3 Resume-Site-Django/manage.py migrate resumesite
+                  python3 Resume-Site-Django/manage.py migrate
 

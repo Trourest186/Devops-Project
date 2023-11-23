@@ -10,6 +10,7 @@ spec:
   - port: {{ .Values.service.port }}
     protocol: TCP
     name: tcp
+    targetPort: 3306
   selector:
     app: {{ .Values.deployment.name }}
 
