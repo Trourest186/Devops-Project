@@ -1,23 +1,37 @@
 #!/usr/bin/expect
 
 set timeout 180
-spawn ./master.sh
 
-expect "exists"
-send "y\n"
+set script_to_spawn ""
 
-expect "ENTER"
-send "\r\n"
+if {[llength $argv] > 0} {
+    set script_to_spawn [lindex $argv 0]
+}
 
-set continue_prompt "Do you want to continue"
+if {$script_to_spawn eq "1"} {
+    spawn ./master.sh
+} elseif {$script_to_spawn eq "2"} {
+    spawn ./install_Master.sh
+} else {
+    puts "Invalid parameter. Exiting."
+    exit 1
+}
+
 expect {
-    "$continue_prompt" {
+    "exists" {
         send "y\n"
+        exp_continue
     }
-    timeout {
-        # Nếu không xuất hiện, bỏ qua trường hợp này
+    "ENTER" {
+        send "\r\n"
+        exp_continue
+    }
+    "Do you want to continue" {
+        send "y\n"
+        exp_continue
+    }
+    eof {
         puts "Pass"
     }
 }
-
 
