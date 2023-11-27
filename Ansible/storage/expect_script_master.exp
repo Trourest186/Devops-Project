@@ -9,9 +9,15 @@ send "y\n"
 expect "ENTER"
 send "\r\n"
 
-expect "Do you want to continue"
-send "y\n"
-
-interact
+set continue_prompt "Do you want to continue"
+expect {
+    "$continue_prompt" {
+        send "y\n"
+    }
+    timeout {
+        # Nếu không xuất hiện, bỏ qua trường hợp này
+        puts "Pass"
+    }
+}
 
 
