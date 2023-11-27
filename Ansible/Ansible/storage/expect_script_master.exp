@@ -1,0 +1,37 @@
+#!/usr/bin/expect
+
+set timeout 180
+
+set script_to_spawn ""
+
+if {[llength $argv] > 0} {
+    set script_to_spawn [lindex $argv 0]
+}
+
+if {$script_to_spawn eq "1"} {
+    spawn ./master.sh
+} elseif {$script_to_spawn eq "2"} {
+    spawn ./install_Master.sh
+} else {
+    puts "Invalid parameter. Exiting."
+    exit 1
+}
+
+expect {
+    "exists" {
+        send "y\n"
+        exp_continue
+    }
+    "ENTER" {
+        send "\r\n"
+        exp_continue
+    }
+    "Do you want to continue" {
+        send "y\n"
+        exp_continue
+    }
+    eof {
+        puts "Pass"
+    }
+}
+

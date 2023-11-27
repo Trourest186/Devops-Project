@@ -1,0 +1,44 @@
+---
+- hosts: nginx
+  gather_facts: false
+  become: true
+  remote_user: ubuntu
+
+  vars_files:
+    - ./vars/create-time-private-ip.yml
+
+  tasks:
+    - ping:
+    
+    - name: Start NGINX
+      ansible.builtin.service:
+        name: nginx
+        state: started
+
+    - name: Reach ports for HTTPS Nginx server
+      ansible.builtin.shell:
+        cmd: "sudo kubectl get service ingress-nginx-controller -o=jsonpath='{.spec.ports[?(@.port==443)].nodePort}' -n ingress-nginx"
+      delegate_to: '{{ master }}'
+      register: nginx_https_ip
+
+    - name: Change IP and port for nginx server
+      ansible.builtin.lineinfile:
+        path: ./templates/nginx.conf
+        regexp: '      server .*'
+        line: '      server {{ worker1 }}:{{ nginx_https_ip.stdout }};'
+      delegate_to: localhost
+
+    - name: Copy nginx.conf file
+      ansible.builtin.copy:
+        dest: /etc/nginx/nginx.conf
+        src: ./templates/nginx.conf
+    
+    - name: Check and reload NGINX server
+      ansible.builtin.shell: |
+        sudo nginx -t
+        sudo nginx -s reload
+
+        exit 0
+      
+      args:
+        executable: /usr/bin/bash

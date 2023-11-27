@@ -1,0 +1,42 @@
+---
+- hosts: master
+  become: true
+  gather_facts: false
+  remote_user: ubuntu
+  
+  vars:
+    project_path: /home/ubuntu/Devops-Project
+
+  vars_files:
+    - ./vars/token.yaml
+
+  tasks:
+    - ping:
+
+    - name: Install git package
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+    
+    - name: Remove folder
+      ansible.builtin.file:
+        path: "{{project_path}}"
+        state: absent
+
+    - name: Create a folder for project
+      ansible.builtin.file:
+        path: "{{project_path}}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0775'
+        recurse: yes
+
+    - name: Clone project from a git repository
+      ansible.builtin.git:
+        repo: 'https://{{github_username}}:{{github_deploy_token}}@github.com/Trourest186/Devops-Project'
+        dest: "{{project_path}}"
+
+
+

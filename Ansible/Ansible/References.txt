@@ -1,0 +1,2 @@
+# Fix ingress controller
+https://stackoverflow.com/questions/67061272/kubernetes-ingress-internal-error-occurred-failed-calling-webhook-validate-ng
