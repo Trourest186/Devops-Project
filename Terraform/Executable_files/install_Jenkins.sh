@@ -18,7 +18,6 @@ sudo apt update
 sudo apt install jenkins
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
-sudo systemctl status jenkins
 
 # Turn off ufw on Ubuntu
 sudo ufw disable
