@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('trourest')
+    }
+    stages{
+        stage("Build"){
+            steps{
+                sh 'docker build -t registry.gitlab.com/tgpham26/pnhappproject:latest .'
+            }
+        }
+        stage("Login"){
+            steps{
+                sh 'echo xhf3f6irMsLAChezhw1y | docker login -u gitlab+deploy-token-3557749 registry.gitlab.com/tgpham26/pnhappproject --password-stdin'
+            }
+        }
+        stage("Push"){
+            steps{
+                sh 'docker push registry.gitlab.com/tgpham26/pnhappproject'
+            }
+        }
+    }
+    post{
+        always{
+            sh 'docker logout'
+        }
+    }
+}
+
+

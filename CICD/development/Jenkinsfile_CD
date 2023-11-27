@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('trourest-helm')
+    }
+    stages{
+        stage("Packages helm chart"){
+            steps{
+                sh 'echo "==========================Packaging helm chart!!!================================"'
+                sh "printenv"
+                sh """
+                    helm package nodejsmysqldemo
+                    helm repo add --username gitlab+deploy-token-3558252 --password zJeJvxs3XnNxjCsgef6e helmgitlabRepo https://gitlab.com/api/v4/projects/50376829/packages/helm/stable
+                    helm repo update
+                    helm cm-push nodejsmysqldemo/ helmgitlabRepo
+                    pwd && ls
+                """
+            }
+        }
+        stage("Deploy helm chart"){
+            steps{
+                sh 'echo "==========================Deploying helm chart!!!================================"'
+                sh """
+                    helm repo add --username gitlab+deploy-token-3558252 --password zJeJvxs3XnNxjCsgef6e trourest https://gitlab.com/api/v4/projects/50376829/packages/helm/stable
+                    helm repo update
+                    helm repo list && helm upgrade --install giang  trourest/nodejsmysqldemo
+                    kubectl --kubeconfig=$HOME/config rollout restart deploy
+                """
+            }
+        }
+    }
+}
+

@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('trourest-helm')
+        TAG = "${env.apinodejsTag}"
+    }
+    stages{
+        stage("Extract Version") {
+            steps {
+                script {
+                    VERSIONS = sh(script: "echo \${TAG} | grep -o \'[0-9]\\+\' | tail -n1", returnStdout: true).trim()
+                    echo "Extracted version: ${VERSIONS}"
+                }
+            }
+        }
+        stage('Update VERSION to env') {
+            steps {
+                script {
+                        def nodes = Jenkins.getInstance().getGlobalNodeProperties()
+                        def envVars= nodes.get(0).getEnvVars()
+                        envVars.put("helmVersion", "${VERSIONS}")
+                        Jenkins.getInstance().save()
+                        echo "Deploying Helm version: ${env.helmVersion} "
+                    }
+                }
+        }
+        stage("Packages helm chart"){
+            steps{
+                sh 'echo "==========================Packaging helm chart!!!================================"'
+                sh "printenv"
+                sh """
+                    pwd && ls
+                    sed -i 's|__VERSION__|${env.helmVersion}|g' nodejsmysqldemo/Chart.yaml
+                    sed -i 's|__TAG__|${env.apinodejsTag}|g' nodejsmysqldemo/values.yaml
+                    helm package nodejsmysqldemo
+                    helm repo add --username gitlab+deploy-token-3558252 --password zJeJvxs3XnNxjCsgef6e helmgitlabRepo https://gitlab.com/api/v4/projects/50376829/packages/helm/stable
+                    helm repo update
+                    helm cm-push nodejsmysqldemo/ helmgitlabRepo
+                """
+            }
+        }
+        stage("Deploy helm chart"){
+            steps{
+                sh 'echo "==========================Deploying helm chart!!!================================"'
+                sh """
+                    helm repo add --username gitlab+deploy-token-3558252 --password zJeJvxs3XnNxjCsgef6e trourest https://gitlab.com/api/v4/projects/50376829/packages/helm/stable
+                    helm repo update
+                    helm repo list && helm upgrade --install giang trourest/nodejsmysqldemo
+                    kubectl --kubeconfig=$HOME/config rollout restart deploy
+                """
+            }
+        }
+    }
+}
+
