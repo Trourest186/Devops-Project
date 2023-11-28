@@ -1,6 +1,6 @@
 ---
 # Using temporary for nginx
-- hosts: worker1
+- hosts: nginx
   gather_facts: false
   become: true
   remote_user: ubuntu

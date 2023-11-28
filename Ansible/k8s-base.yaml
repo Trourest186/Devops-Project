@@ -1,0 +1,62 @@
+---
+- hosts: master
+  gather_facts: false
+  become: true
+  remote_user: ubuntu
+  
+  vars:
+    - ip_nginx: 10.0.4.149
+
+  vars_files:
+    - ./vars/create-time-private-ip.yml
+
+  tasks:
+    - ping:
+    
+    - name: Copy .pem file to master machine
+      ansible.builtin.copy:
+        src: ./ec2-key.pem
+        dest: /home/ubuntu/ec2-key.pem
+        owner: ubuntu
+        group: ubuntu
+        mode: '0400'  # Set correct permissions (readable only by the owner)
+
+          #- name: Create a folder which contain config of cluster for nginx7
+      #  ansible.builtin.shell:
+        #    cmd: mkdir config || true
+          #  delegate_to: '{{ip_nginx}}'
+    - name: Copy .kube/config to local
+      ansible.builtin.shell: |
+        sudo cp -r /root/.kube .
+        sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube/
+      args:
+        executable: /usr/bin/bash
+
+    - name: Copy .kube/config to nginx7
+      ansible.builtin.shell: |
+        set timeout 30
+
+        spawn scp -i "ec2-key.pem" .kube/config ubuntu@{{ip_nginx}}:/home/ubuntu/
+
+        expect {
+          "Are you sure" {
+            send "yes\n"
+            exp_continue
+          }
+          timeout {
+            send_user "Unexpected output\n"
+            exit 1
+          }
+          eof {
+            send_user "No expect results\n"
+          }
+        }
+
+        interact
+
+        exit 0
+
+      args:
+        executable: /usr/bin/expect
+      delegate_to: '{{ master }}'
+
