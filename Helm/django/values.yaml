@@ -17,8 +17,8 @@ db:
   pass: "1"
   
 database:
-  #db_host: "mysql.dev.svc.cluster.local"
-  db_host: "10.244.1.40"
+  db_host: "mysql.dev.svc.cluster.local"
+  #db_host: "10.244.1.40"
   db_user: "root"
   db_pass: "a123456"
   db_port: "3306"
