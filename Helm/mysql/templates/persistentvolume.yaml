@@ -3,14 +3,18 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: {{ .Values.pv.name }}
-  labels:
-    type: {{ .Values.pv.labels.type }}
+    #labels:
+    #  type: {{ .Values.pv.labels.type }}
 spec:
-  storageClassName: {{ .Values.pv.storageClassName }}
+  #storageClassName: {{ .Values.pv.storageClassName }}
+  storageClassName: nfsstorageclass
   capacity:
     storage: {{ .Values.pv.capacity }}
   accessModes:
     - {{ .Values.pv.accessModes }}
-  hostPath:
-    path: {{ .Values.pv.hostPath.path }}
+      #hostPath:
+      #path: {{ .Values.pv.hostPath.path }}
+  nfs:
+    path: "/data/mydata/"
+    server: {{ .Values.server_NFS }}
 

@@ -4,7 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.pvc.name }}
 spec:
-  storageClassName: {{ .Values.pvc.storageClassName }}
+  #storageClassName: {{ .Values.pvc.storageClassName }}
+  storageClassName: nfsstorageclass
   accessModes:
     - {{ .Values.pvc.accessModes }}
   resources:

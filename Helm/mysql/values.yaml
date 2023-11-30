@@ -115,6 +115,6 @@ deployment:
   name: mysql
   image: mysql:5.6
   containerPort: 3306
-  volumeMountPath: /var/lib/mysql
+  volumeMountPath: /home/ubuntu
 
-
+server_NFS: "10.0.1.204"
