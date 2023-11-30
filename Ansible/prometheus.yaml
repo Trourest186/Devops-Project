@@ -111,3 +111,37 @@
         src: ./templates/prometheus.yaml
         dest: /etc/prometheus/prometheus.yml
 
+    - name: Change permissions for prometheus.yaml
+      ansible.builtin.file:
+        path: /etc/prometheus/prometheus.yml
+        owner: prometheus
+        group: prometheus
+        state: file
+    
+    - name: Create a prometheus service file
+      ansible.builtin.file:
+        path: /etc/systemd/system/prometheus.service
+        state: touch
+        mode: '0777'
+    
+    - name: Write content for service file
+      ansible.builtin.copy:
+        src: ./templates/prometheus.service
+        dest: /etc/systemd/system/prometheus.service
+    
+    - name: Set executable permissions for Prometheus
+      ansible.builtin.file:
+        path: /usr/local/bin/prometheus
+        mode: '0755'
+
+    - name: Reload systemd manager configuration
+      ansible.builtin.systemd:
+        daemon_reload: yes
+
+    - name: Start prometheus service
+      ansible.builtin.systemd:
+        name: prometheus
+        state: started
+
+  
+
