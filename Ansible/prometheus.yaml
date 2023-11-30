@@ -1,0 +1,113 @@
+---
+- hosts: master
+  gather_facts: false
+  become: true
+  remote_user: ubuntu
+
+  vars:
+    -  home_address: /home/ubuntu
+
+  tasks:
+
+    - ping:
+    
+    - name: Check if file exists
+      ansible.builtin.stat:
+        path: '{{ home_address }}/prometheus-2.48.0.linux-amd64.tar.gz'
+      register: result  
+
+    - name: Download Prometheus
+      ansible.builtin.get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz || true"
+        dest: '{{ home_address }}'
+      when: not result.stat.exists
+
+    - name: Extract file
+      ansible.builtin.unarchive:
+        src: /home/ubuntu/prometheus-2.48.0.linux-amd64.tar.gz
+        dest: '{{ home_address }}'
+        remote_src: yes
+
+    - name: Rename for name file
+      ansible.builtin.command:
+        cmd: mv prometheus-2.48.0.linux-amd64 prometheus-files
+    
+    - name: Create user for prometheus
+      ansible.builtin.user:
+        name: prometheus
+        shell: /bin/false
+        create_home: no
+        system: yes
+                
+    - name: Create folder /etc/prometheus
+      ansible.builtin.file:
+        path: /etc/prometheus
+        state: directory
+
+    - name: Create folder /var/lib/prometheus
+      ansible.builtin.file:
+        path: /var/lib/prometheus
+        state: directory
+
+    - name: Change permissions /etc/prometheus
+      ansible.builtin.file:
+        path: /etc/prometheus
+        owner: prometheus
+        group: prometheus
+        state: directory
+
+    - name: Change ower /var/lib/prometheus
+      ansible.builtin.file:
+        path: /var/lib/prometheus
+        owner: prometheus
+        group: prometheus
+        state: directory
+
+    - name: Copy files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: /usr/local/bin/
+        remote_src: yes
+      loop:
+        - prometheus-files/prometheus
+        - prometheus-files/promtool
+
+    - name: Change permissions for prometheus
+      ansible.builtin.file:
+        path: /usr/local/bin/prometheus
+        owner: prometheus
+        group: prometheus
+        state: file
+
+    - name: Change permissions for promtool
+      ansible.builtin.file:
+        path: /usr/local/bin/promtool
+        owner: prometheus
+        group: prometheus
+        state: file
+
+    - name: Copy 'consoles' directory
+      ansible.builtin.copy:
+        src: prometheus-files/consoles
+        dest: /etc/prometheus
+        owner: prometheus
+        group: prometheus
+        mode: preserve
+        remote_src: yes
+        directory_mode: yes
+
+    - name: Copy 'console_libraries' directory
+      ansible.builtin.copy:
+        src: prometheus-files/console_libraries
+        dest: /etc/prometheus
+        owner: prometheus
+        group: prometheus
+        mode: preserve
+        remote_src: yes
+        directory_mode: yes
+
+    - name: Copy configuration file for prometheus
+      ansible.builtin.copy:
+        src: ./templates/prometheus.yaml
+        dest: /etc/prometheus/prometheus.yml
+
