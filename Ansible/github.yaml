@@ -6,6 +6,7 @@
   
   vars:
     project_path: /home/ubuntu/Devops-Project
+    ansible_password_file: ./vars/vault_pass.txt
 
   vars_files:
     - ./vars/token.yaml
