@@ -3,6 +3,9 @@
   gather_facts: false
   become: true
   remote_user: ubuntu
+  
+  vars:
+    - my_ip: 10.0.1.204
 
   vars_files:
     - ./vars/create-time-private-ip.yml
@@ -20,3 +23,9 @@
         path: /home/ubuntu/Devops-Project/Helm/django/values.yaml
         regexp: 'db_host: ".*"'
         line: '  db_host: "{{ mysql_pod_ip.stdout }}"'
+
+    - name: Change IP of NFS server in configuration file
+      ansible.builtin.lineinfile:
+        path: /home/ubuntu/Devops-Project/Helm/mysql/values.yaml
+        regexp: 'server_NFS: ".*"'
+        line: 'server_NFS: "{{ my_ip }}"'
