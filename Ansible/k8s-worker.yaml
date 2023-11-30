@@ -19,6 +19,7 @@
       loop:
         - dos2unix
         - expect
+        - nfs-common # For storaging NFS 
         - # Add any other necessary packages
 
     - name: Change IP of master for configuration file worker.sh
