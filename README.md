@@ -29,4 +29,4 @@ This project establishes a comprehensive DevOps workflow, encompassing system bu
   - https://gitlab.com/tgpham26/cd-devops.git for continuous delivery, and continuous deployment
   - https://gitlab.com/tgpham26/ci-devops.git for continuous integration
 
-- Configuration webhook, jenkins then start to demo :))
+- Configuration webhook, jenkins then start to demo
