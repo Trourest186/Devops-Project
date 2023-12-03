@@ -23,6 +23,8 @@ This project establishes a comprehensive DevOps workflow, encompassing system bu
 - With ansible folder, run yaml files for configuration:
   [instructions can be found in the ansible directory](https://github.com/Trourest186/Devops-Project/tree/master/Ansible)
 
+- The image packaging process or helm chart for kubernetes I have written in the respective folders, and will be used in CI/CD
+  
 - Preparation two repositories (gitlab), install same as me or different:
   - https://gitlab.com/tgpham26/cd-devops.git for continuous delivery, and continuous deployment
   - https://gitlab.com/tgpham26/ci-devops.git for continuous integration
