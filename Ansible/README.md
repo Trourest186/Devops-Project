@@ -8,4 +8,4 @@ ansible-playbook -i hosts github.yaml -u ubuntu --vault-password-file /path/to/y
 - cert: Reach certificate for domain
 - nginx-install: Install Nginx
 - prometheus: Install and set up prometheus
-- github: clone repository
+- github: Clone repository
