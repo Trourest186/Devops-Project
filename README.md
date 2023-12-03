@@ -28,5 +28,8 @@ This project establishes a comprehensive DevOps workflow, encompassing system bu
 - Preparation two repositories (gitlab), install same as me or different:
   - https://gitlab.com/tgpham26/cd-devops.git for continuous delivery, and continuous deployment
   - https://gitlab.com/tgpham26/ci-devops.git for continuous integration
+ 
+  # 📝 Author
+  Pham Truong Giang (Trourest)
 
 - Configuration webhook, jenkins then start to demo
