@@ -11,3 +11,13 @@ This project establishes a comprehensive DevOps workflow, encompassing system bu
 - Package application with docker, helm
 - High availability with kubernetes, ingress controller, ...
 - Build CI/CD use jenkins, and gitlab for storage images, helm chart to deployment, production
+
+# 📋 Usage
+- Then git clone my repository, redirect into terrafrom folder, change your key for sources, finally perform the following steps:
+  
+  ```
+  terraform init
+  terraform plan
+  terraform apply --auto-approve
+  ```
+- For ansible folder, run yaml files for configuring
