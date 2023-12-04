@@ -2,7 +2,7 @@
 This project establishes a comprehensive DevOps workflow, encompassing system building, configuration, development, management, and seamless continuous integration with real-world applications
 
 ## Architecture for my project
-![image](https://github.com/Trourest186/Devops-Project/assets/74035725/1e508538-d761-46a0-8872-eaed1ea03b19)
+![image](https://github.com/Trourest186/Devops-Project/assets/74035725/49e9c551-d496-402b-bd5d-b3f3cf87ceb5)
 
 # 🛠️ Features
 - Using IaC (Terrafom) for preparating AWS cloud architecture
