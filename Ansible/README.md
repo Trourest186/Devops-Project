@@ -1,4 +1,3 @@
-ansible-playbook -i hosts github.yaml -u ubuntu --vault-password-file /path/to/your/ansible/vars/vault_pass.txt
 # Meaningful list of files
 - k8s-master: Set up master host
 - k8s-worker: Set up worker host
@@ -9,3 +8,6 @@ ansible-playbook -i hosts github.yaml -u ubuntu --vault-password-file /path/to/y
 - nginx-install: Install Nginx
 - prometheus: Install and set up prometheus
 - github: Clone repository
+
+Because my password is encoded with vault, run below cli to authenticate:
+ansible-playbook -i hosts github.yaml -u ubuntu --vault-password-file /path/to/your/ansible/vars/vault_pass.txt
