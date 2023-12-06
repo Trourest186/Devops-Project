@@ -7,7 +7,7 @@ This project establishes a comprehensive DevOps workflow, encompassing system bu
 # 🛠️ Features
 - Using IaC (Terrafom) for preparating AWS cloud architecture
 - Ansible is tools which used to configure for machine on AWS to compatiable with conditions
-- To demo, I coded a web django simple but this have full basic functions like a real application as font-end, backend, database
+- To demo, I coded a web django simple but this have full basic functions like a real application as front-end, backend, database
 - Package application with docker, helm
 - High availability with kubernetes, ingress controller, ...
 - Build CI/CD use jenkins, and gitlab for storage images, helm chart to deployment, production
